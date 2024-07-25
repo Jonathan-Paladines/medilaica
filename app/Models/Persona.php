@@ -67,7 +67,7 @@ class Persona extends Model
 
     public function alergias()
     {
-        return $this->belongsToMany(Alergia::class, 'personas_alergias')->using(PersonasAlergias::class);
+        return $this->belongsToMany(Alergia::class, 'personas_alergias')->using(PersonaAlergia::class);
     }
 
     public function contactos()

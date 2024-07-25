@@ -54,5 +54,8 @@ Route::resource('contactos', ContactoController::class); // Rutas para los recur
 
 //Tablas Intermedias
 Route::resource('personas_alergias', PersonaAlergiaController::class)->except(['show', 'edit', 'update']);
+Route::delete('/personas_alergias/{personaId}/{alergiaId}', [PersonaAlergiaController::class, 'destroy'])->name('personas_alergias.destroy');
 Route::resource('personas_contactos', PersonaContactosController::class)->except(['show', 'edit', 'update']);
+Route::delete('/personas_contactos/{personaId}/{contactoId}', [PersonaContactosController::class, 'destroy'])->name('personas_contactos.destroy');
 Route::resource('personas_vacunas', PersonaVacunasController::class)->except(['show', 'edit', 'update']);
+Route::delete('/personas_vacunas/{personaId}/{vacunaId}', [PersonaVacunasController::class, 'destroy'])->name('personas_vacunas.destroy');

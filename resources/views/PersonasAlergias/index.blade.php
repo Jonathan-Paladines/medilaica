@@ -16,7 +16,7 @@
             @foreach($personasAlergias as $persona)
                 @foreach($persona->alergias as $alergia)
                     <tr>
-                        <td>{{ $persona->nombre }}</td>
+                        <td>{{ $persona->nombres }} {{ $persona->apellidos }}</td>
                         <td>{{ $alergia->nombrealergia }}</td>
                         <td>
                             <form action="{{ route('personas_alergias.destroy', [$persona->id, $alergia->id]) }}" method="POST">

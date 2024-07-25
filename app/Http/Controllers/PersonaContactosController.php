@@ -11,22 +11,22 @@ class PersonaContactosController extends Controller
     public function index()
     {
         $personasContactos = Persona::with('contactos')->get();
-        return view('personas_contactos.index', compact('personasContactos'));
+        return view('personascontactos.index', compact('personasContactos'));
     }
 
     public function create()
     {
         $personas = Persona::all();
         $contactos = Contacto::all();
-        return view('personas_contactos.create', compact('personas', 'contactos'));
+        return view('personascontactos.create', compact('personas', 'contactos'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'persona_id' => 'required|exists:personas,id',
-            'contacto_id' => 'required|exists:contactos,id',
-        ]);
+        //$request->validate([
+        //    'persona_id' => 'required|exists:personas,id',
+        //    'contacto_id' => 'required|exists:contactos,id',
+        //]);
 
         $persona = Persona::findOrFail($request->persona_id);
         $persona->contactos()->attach($request->contacto_id);
