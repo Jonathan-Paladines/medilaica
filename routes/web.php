@@ -13,6 +13,8 @@ use App\Http\Controllers\PersonaAlergiaController;
 use App\Http\Controllers\PersonaContactosController;
 use App\Http\Controllers\PersonaVacunasController;
 use App\Http\Controllers\PersonalAntecedentesController;
+use App\Http\Controllers\FamiliaresAntecedentesController;
+use App\Http\Controllers\QuirurgicosAntecedentesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -67,3 +69,5 @@ Route::delete('personas_contactos/{persona_id}/{contacto_id}', [PersonaContactos
 
 //Antecedentes
 Route::resource('personal_antecedentes', PersonalAntecedentesController::class);
+Route::resource('familiares_antecedentes', FamiliaresAntecedentesController::class);
+Route::resource('quirurgicos_antecedentes', QuirurgicosAntecedentesController::class);

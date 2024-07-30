@@ -91,6 +91,9 @@
                         <a href="{{ route('personas_contactos.create', $persona->id) }}" class="btn btn-info btn-circle btn-lg" name="ver_contactos" title="Contactos de emergencia">  
                             <i class="fa fa-address-book"></i>   
                         </a>
+                        <a href="{{ route('personal_antecedentes.index', $persona->id) }}" class="btn btn-info btn-circle btn-lg" name="ver_contactos" title="Hábitos">  
+                            <i class="fa fa-bath"></i>   
+                        </a>
                     </div>
                     
                 </div> 

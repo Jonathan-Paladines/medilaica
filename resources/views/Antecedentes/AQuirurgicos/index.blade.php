@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Listado de Antecedentes')
+@section('title', 'Listado de Antecedentes Quirúrgicos')
 
 @section('content')
 <div class="container">
-    <h1>Listado de Antecedentes</h1>
-    <!-- Botón para abrir el modal -->
+    <h1>Antecedentes Quirúrgicos del paciente</h1>
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createAntecedenteModal">
         Crear Antecedente
     </button>
@@ -23,12 +22,12 @@
             @foreach($antecedentes as $antecedente)
             <tr>
                 <td>{{ $antecedente->id }}</td>
-                <td>{{ $antecedente->anteper }}</td>
-                <td>{{ $antecedente->created_at->format('d-m-Y') }}</td> <!-- Formatear la fecha como desees -->
+                <td>{{ $antecedente->antequi }}</td>
+                <td>{{ $antecedente->created_at->format('d-m-Y') }}</td>
                 <td>
-                    <a href="{{ route('personal_antecedentes.show', $antecedente->id) }}" class="btn btn-info">Ver</a>
-                    <a href="{{ route('personal_antecedentes.edit', $antecedente->id) }}" class="btn btn-warning">Editar</a>
-                    <form action="{{ route('personal_antecedentes.destroy', $antecedente->id) }}" method="POST" style="display:inline-block;">
+                    <a href="{{ route('quirurgicos_antecedentes.show', $antecedente->id) }}" class="btn btn-info">Ver</a>
+                    <a href="{{ route('quirurgicos_antecedentes.edit', $antecedente->id) }}" class="btn btn-warning">Editar</a>
+                    <form action="{{ route('quirurgicos_antecedentes.destroy', $antecedente->id) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -45,15 +44,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createAntecedenteModalLabel">Crear Antecedente</h5>
+                <h5 class="modal-title" id="createAntecedenteModalLabel">Ingresar Antecedente</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="createAntecedenteForm" action="{{ route('personal_antecedentes.store') }}" method="POST">
+                <form id="createAntecedenteForm" action="{{ route('quirurgicos_antecedentes.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="anteper" class="form-label">Descripción del Antecedente:</label>
-                        <textarea name="anteper" class="form-control" id="anteper" rows="5" required></textarea>
+                        <label for="antequi" class="form-label">Descripción del Antecedente Quirurgico:</label>
+                        <textarea name="antequi" class="form-control" id="antequi" rows="5" required></textarea>
                     </div>
                 </form>
             </div>
