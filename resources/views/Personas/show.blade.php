@@ -88,7 +88,7 @@
                         <a href="{{ route('personas_vacunas.create') }}" class="btn btn-info btn-circle btn-lg" name="ver_vacunas" title="Vacunas">  
                             <i class="fa fa-syringe"></i>   
                         </a>
-                        <a href="{{ route('personas_contactos.create') }}" class="btn btn-info btn-circle btn-lg" name="ver_contactos" title="Contactos de emergencia">  
+                        <a href="{{ route('personas_contactos.create', $persona->id) }}" class="btn btn-info btn-circle btn-lg" name="ver_contactos" title="Contactos de emergencia">  
                             <i class="fa fa-address-book"></i>   
                         </a>
                     </div>

@@ -16,17 +16,45 @@
         <div class="form-group">
             <label for="alergia_id">Alergia</label>
             <div class="d-flex align-items-center">
-            <select name="alergia_id" id="alergia_id" class="form-control" required>
-                @foreach($alergias as $alergia)
-                    <option value="{{ $alergia->id }}">{{ $alergia->nombrealergia }}</option>
-                @endforeach
-            </select>
-            <a href="{{ route('contactos.create') }}" class="btn btn-info btn-circle btn-sm ms-3" name="ingresar_alergia" title="Ingresar Alergia">  
-                <i class="fa fa-flask"></i>   
-            </a>
-        </div>
+                <select name="alergia_id" id="alergia_id" class="form-control" required>
+                    @foreach($alergias as $alergia)
+                        <option value="{{ $alergia->id }}">{{ $alergia->nombrealergia }}</option>
+                    @endforeach
+                </select>
+                <a href="{{ route('contactos.create') }}" class="btn btn-info btn-circle btn-sm ms-3" name="ingresar_alergia" title="Ingresar Alergia">  
+                    <i class="fa fa-flask"></i>   
+                </a>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Asociar</button>
     </form>
+
+    <h2 class="mt-5">Personas y Alergias</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Persona</th>
+                <th>Alergia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($personasAlergias as $persona)
+                @foreach($persona->alergias as $alergia)
+                    <tr>
+                        <td>{{ $persona->nombres }} {{ $persona->apellidos }}</td>
+                        <td>{{ $alergia->nombrealergia }}</td>
+                        <td>
+                            <form action="{{ route('personas_alergias.destroy', [$persona->id, $alergia->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Desasociar</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection

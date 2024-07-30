@@ -19,7 +19,8 @@ class PersonaVacunasController extends Controller
     {
         $personas = Persona::all();
         $vacunas = Vacuna::all();
-        return view('personasvacunas.create', compact('personas', 'vacunas'));
+        $personasVacunas = Persona::with('vacunas')->get();
+        return view('personasvacunas.create', compact('personas', 'vacunas', 'personasVacunas'));
     }
 
     public function store(Request $request)
@@ -39,7 +40,7 @@ class PersonaVacunasController extends Controller
             'observacion' => $request->observacion,
         ]);
 
-        return redirect()->route('personas_vacunas.index')->with('success', 'Vacuna asociada a la persona correctamente.');
+        return redirect()->route('personas_vacunas.create')->with('success', 'Vacuna asociada a la persona correctamente.');
     }
 
     public function destroy($personaId, $vacunaId)
@@ -47,6 +48,6 @@ class PersonaVacunasController extends Controller
         $persona = Persona::findOrFail($personaId);
         $persona->vacunas()->detach($vacunaId);
 
-        return redirect()->route('personas_vacunas.index')->with('success', 'Vacuna desasociada de la persona correctamente.');
+        return redirect()->route('personas_vacunas.create')->with('success', 'Vacuna desasociada de la persona correctamente.');
     }
 }

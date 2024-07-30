@@ -12,6 +12,7 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\PersonaAlergiaController;
 use App\Http\Controllers\PersonaContactosController;
 use App\Http\Controllers\PersonaVacunasController;
+use App\Http\Controllers\PersonalAntecedentesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,3 +60,10 @@ Route::resource('personas_contactos', PersonaContactosController::class)->except
 Route::delete('/personas_contactos/{personaId}/{contactoId}', [PersonaContactosController::class, 'destroy'])->name('personas_contactos.destroy');
 Route::resource('personas_vacunas', PersonaVacunasController::class)->except(['show', 'edit', 'update']);
 Route::delete('/personas_vacunas/{personaId}/{vacunaId}', [PersonaVacunasController::class, 'destroy'])->name('personas_vacunas.destroy');
+
+Route::get('personas_contactos/{persona_id?}', [PersonaContactosController::class, 'index'])->name('personas_contactos.index');
+Route::post('personas_contactos', [PersonaContactosController::class, 'store'])->name('personas_contactos.store');
+Route::delete('personas_contactos/{persona_id}/{contacto_id}', [PersonaContactosController::class, 'destroy'])->name('personas_contactos.destroy');
+
+//Antecedentes
+Route::resource('personal_antecedentes', PersonalAntecedentesController::class);
