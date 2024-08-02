@@ -15,4 +15,9 @@ class QuirurgicosAntecedentes extends Model
         'antequi'
     ];
 
+    public function personas()
+    {
+        return $this->belongsToMany(Persona::class, 'personas_aquirurgicos_antecedentes');
+    }
+
 }

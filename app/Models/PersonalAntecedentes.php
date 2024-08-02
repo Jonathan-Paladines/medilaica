@@ -15,4 +15,10 @@ class PersonalAntecedentes extends Model
         'anteper'
     ];
 
+    public function personas()
+    {
+        return $this->belongsToMany(Persona::class, 'personas_antecedentes', 'personal_antecedente_id', 'persona_id')
+                    ->withTimestamps();
+    }
+
 }

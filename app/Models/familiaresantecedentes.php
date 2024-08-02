@@ -15,4 +15,9 @@ class FamiliaresAntecedentes extends Model
         'antefam',
     ];
 
+    public function personas()
+    {
+        return $this->belongsToMany(Persona::class, 'personas_afamiliares', 'familiares_antecedente_id', 'persona_id')->withTimestamps();
+    }
+
 }

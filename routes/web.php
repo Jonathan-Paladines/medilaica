@@ -16,6 +16,10 @@ use App\Http\Controllers\PersonalAntecedentesController;
 use App\Http\Controllers\FamiliaresAntecedentesController;
 use App\Http\Controllers\QuirurgicosAntecedentesController;
 use App\Http\Controllers\HabitosController;
+use App\Http\Controllers\PersonaHabitosController;
+use App\Http\Controllers\PersonasAntecedentesController;
+use App\Http\Controllers\PersonasAfamiliaresController;
+use App\Http\Controllers\PersonasAquirurgicosController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,3 +77,31 @@ Route::resource('personal_antecedentes', PersonalAntecedentesController::class);
 Route::resource('familiares_antecedentes', FamiliaresAntecedentesController::class);
 Route::resource('quirurgicos_antecedentes', QuirurgicosAntecedentesController::class);
 Route::resource('habitos', HabitosController::class);
+
+// Tabla intermedia PersonaHábitos
+Route::get('personas/{persona}/habitos', [PersonaHabitosController::class, 'index'])->name('personas.habitos.index');
+Route::post('personas/{persona}/habitos', [PersonaHabitosController::class, 'store'])->name('personas.habitos.store');
+Route::delete('personas/{persona}/habitos/{habitos}', [PersonaHabitosController::class, 'destroy'])->name('personas.habitos.destroy');
+
+// Tabla intermedia PersonasAntecedentes
+Route::prefix('personas/{persona}')->group(function () {
+    Route::get('antecedentes', [PersonasAntecedentesController::class, 'index'])->name('personas_antecedentes.index');
+    Route::post('antecedentes', [PersonasAntecedentesController::class, 'store'])->name('personas_antecedentes.store');
+    Route::delete('antecedentes/{personal_antecedente}', [PersonasAntecedentesController::class, 'destroy'])->name('personas_antecedentes.destroy');
+});
+
+// Ruta T-intermedia relacion personas y antec.Familiares
+// Ruta para mostrar los antecedentes familiares de una persona
+Route::get('personas/{persona}/afamiliares', [PersonasAfamiliaresController::class, 'index'])->name('personas_afamiliares.index');
+
+// Ruta para asociar un nuevo antecedente familiar a una persona
+Route::post('personas/{persona}/afamiliares', [PersonasAfamiliaresController::class, 'store'])->name('personas_afamiliares.store');
+
+// Ruta para desasociar un antecedente familiar de una persona
+Route::delete('personas/{persona}/afamiliares/{antecedente}', [PersonasAfamiliaresController::class, 'destroy'])->name('personas_afamiliares.destroy');
+
+
+// Ruta para mostrar los antecedentes quirurgicos de una persona
+Route::get('personas/{persona}/quirurgicos', [PersonasAquirurgicosController::class, 'index'])->name('personas_aquirurgicos.index');
+Route::post('personas/{persona}/quirurgicos', [PersonasAquirurgicosController::class, 'store'])->name('personas_aquirurgicos.store');
+Route::delete('personas/{persona}/quirurgicos/{antecedente}', [PersonasAquirurgicosController::class, 'destroy'])->name('personas_aquirurgicos.destroy');

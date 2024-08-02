@@ -15,4 +15,9 @@ class Habitos extends Model
         'habitos'
     ];
 
+    public function personas()
+    {
+        return $this->belongsToMany(Persona::class, 'persona_habitos', 'habitos_id', 'persona_id');
+    }
+
 }

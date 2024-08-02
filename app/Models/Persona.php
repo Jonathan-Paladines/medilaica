@@ -81,6 +81,27 @@ class Persona extends Model
                     ->using(PersonasVacunas::class)
                     ->withPivot('numero_dosis', 'fecha_vacuna', 'observacion');
     }
+
+        public function habitos()
+    {
+        return $this->belongsToMany(Habitos::class, 'persona_habitos', 'persona_id', 'habitos_id')->withTimestamps();
+    }
+
+    public function personalAntecedentes()
+    {
+        return $this->belongsToMany(PersonalAntecedentes::class, 'personas_antecedentes', 'persona_id', 'personal_antecedente_id')
+                    ->withTimestamps();
+    }
+
+    public function familiaresAntecedentes()
+    {
+        return $this->belongsToMany(FamiliaresAntecedentes::class, 'personas_afamiliares', 'persona_id', 'familiares_antecedente_id')->withTimestamps();
+    }
+
+    public function quirurgicosAntecedentes()
+    {
+        return $this->belongsToMany(QuirurgicosAntecedentes::class, 'personas_aquirurgicos', 'persona_id', 'quirurgicos_antecedente_id')->withTimestamps();;
+    }
     
 }
 

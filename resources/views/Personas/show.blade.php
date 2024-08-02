@@ -91,8 +91,19 @@
                         <a href="{{ route('personas_contactos.create', $persona->id) }}" class="btn btn-info btn-circle btn-lg" name="ver_contactos" title="Contactos de emergencia">  
                             <i class="fa fa-address-book"></i>   
                         </a>
-                        <a href="{{ route('personal_antecedentes.index', $persona->id) }}" class="btn btn-info btn-circle btn-lg" name="ver_contactos" title="Hábitos">  
-                            <i class="fa fa-bath"></i>   
+                        <a href="{{ route('personas.habitos.index', $persona->id) }}" class="btn btn-info btn-circle btn-lg" name="ver_habitos" title="Hábitos">
+                            <i class="fa fa-bath"></i>
+                        </a>
+                    </div>
+                    <div class="btn-wrapper mb-3">
+                        <a href="{{ route('personas_antecedentes.index', $persona->id) }}" class="btn btn-success btn-circle btn-lg" name="ver_antecedentes personales" title="Antecedentes Personales">  
+                            <i class="fa fa-heart"></i>   
+                        </a>
+                        <a href="{{ route('personas_aquirurgicos.index', $persona->id) }}" class="btn btn-success btn-circle btn-lg" name="ver_vacunas" title="Antecedentes Quirúrgicos">  
+                            <i class="fa fa-history"></i>   
+                        </a>
+                        <a href="{{ route('personas_afamiliares.index', $persona->id) }}" class="btn btn-success btn-circle btn-lg" name="ver_contactos" title="Antecedentes Familiares">  
+                            <i class="fa fa-heartbeat"></i>   
                         </a>
                     </div>
                     
