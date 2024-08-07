@@ -10,6 +10,8 @@ class PersonasAquirurgicosController extends Controller
 {
     public function index($personaId)
     {
+        //echo 'te entró'.$personaId;
+        //exit();
         $persona = Persona::findOrFail($personaId);
         $antecedentes = QuirurgicosAntecedentes::all(); // Obtener todos los antecedentes quirúrgicos disponibles
         return view('PersonasAntecedentes.PersonasAquirurgicos.index', compact('persona', 'antecedentes'));
@@ -33,6 +35,13 @@ class PersonasAquirurgicosController extends Controller
         $persona->quirurgicosAntecedentes()->attach($request->quirurgicos_antecedente_id);
     
         return redirect()->route('personas_aquirurgicos.index', $personaId)->with('success', 'Antecedente quirúrgico asignado con éxito.');
+    }
+
+    public function show($id)
+    {
+        $persona = Persona::findOrFail($id);
+        $antecedente = QuirurgicosAntecedentes::findOrFail($id);
+        return view('PersonasAntecedentes.PersonasAquirurgicos.index', compact('antecedente','persona'));
     }
 
     public function destroy($personaId, $antecedenteId)

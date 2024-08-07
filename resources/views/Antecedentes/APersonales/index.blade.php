@@ -4,7 +4,8 @@
 
 @section('content')
 <div class="container">
-    <h1>Listado de Antecedentes</h1>
+<h1>Antecedentes Personales de {{ $persona->nombre }}</h1>
+
     <!-- Botón para abrir el modal -->
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createAntecedenteModal">
         Crear Antecedente

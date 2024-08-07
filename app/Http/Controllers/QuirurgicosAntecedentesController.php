@@ -20,12 +20,13 @@ class QuirurgicosAntecedentesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'antequi' => 'required|string|max:230',
+        $antecedente = QuirurgicosAntecedentes::create($request->all());
+    
+        return response()->json([
+            'success' => true,
+            'id' => $antecedente->id,
+            'antequi' => $antecedente->antequi
         ]);
-
-        QuirurgicosAntecedentes::create($request->all());
-        return redirect()->route('quirurgicos_antecedentes.index')->with('success', 'Antecedente creado con éxito.');
     }
 
     public function show($id)

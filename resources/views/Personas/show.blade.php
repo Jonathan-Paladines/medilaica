@@ -99,10 +99,10 @@
                         <a href="{{ route('personas_antecedentes.index', $persona->id) }}" class="btn btn-success btn-circle btn-lg" name="ver_antecedentes personales" title="Antecedentes Personales">  
                             <i class="fa fa-heart"></i>   
                         </a>
-                        <a href="{{ route('personas_aquirurgicos.index', $persona->id) }}" class="btn btn-success btn-circle btn-lg" name="ver_vacunas" title="Antecedentes Quirúrgicos">  
-                            <i class="fa fa-history"></i>   
+                        <a href="{{ route('personas_aquirurgicos.index', $persona->id) }}" class="btn btn-success btn-circle btn-lg" name="Ver antecedentes quirurgicos" title="Antecedentes Quirúrgicos">  
+                            <i class="fa fa-history"></i>                               
                         </a>
-                        <a href="{{ route('personas_afamiliares.index', $persona->id) }}" class="btn btn-success btn-circle btn-lg" name="ver_contactos" title="Antecedentes Familiares">  
+                        <a href="{{ route('personas_afamiliares.index', $persona->id) }}" class="btn btn-success btn-circle btn-lg" name="ver_Antecdentes familiares" title="Antecedentes Familiares">  
                             <i class="fa fa-heartbeat"></i>   
                         </a>
                     </div>

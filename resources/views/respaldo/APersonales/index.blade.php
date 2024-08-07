@@ -4,8 +4,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Antecedentes Personales de {{ $persona->nombre }}</h1>
-
+    <h1>Listado de Antecedentes</h1>
     <!-- Botón para abrir el modal -->
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createAntecedenteModal">
         Crear Antecedente
@@ -25,7 +24,7 @@
             <tr>
                 <td>{{ $antecedente->id }}</td>
                 <td>{{ $antecedente->anteper }}</td>
-                <td>{{ $antecedente->created_at->format('d-m-Y') }}</td>
+                <td>{{ $antecedente->created_at->format('d-m-Y') }}</td> <!-- Formatear la fecha como desees -->
                 <td>
                     <a href="{{ route('personal_antecedentes.show', $antecedente->id) }}" class="btn btn-info">Ver</a>
                     <a href="{{ route('personal_antecedentes.edit', $antecedente->id) }}" class="btn btn-warning">Editar</a>
@@ -50,7 +49,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="createAntecedenteForm" action="{{ route('personal_antecedentes.store', $persona->id) }}" method="POST">
+                <form id="createAntecedenteForm" action="{{ route('personal_antecedentes.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="anteper" class="form-label">Descripción del Antecedente:</label>

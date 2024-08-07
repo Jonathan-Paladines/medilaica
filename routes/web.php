@@ -72,8 +72,13 @@ Route::get('personas_contactos/{persona_id?}', [PersonaContactosController::clas
 Route::post('personas_contactos', [PersonaContactosController::class, 'store'])->name('personas_contactos.store');
 Route::delete('personas_contactos/{persona_id}/{contacto_id}', [PersonaContactosController::class, 'destroy'])->name('personas_contactos.destroy');
 
-//Antecedentes
+//Antecedentes Personales
 Route::resource('personal_antecedentes', PersonalAntecedentesController::class);
+Route::post('personas/{persona}/personal_antecedentes', [PersonasAntecedentesController::class, 'store'])->name('personal_antecedentes.store');
+Route::get('personas/{persona}/personal_antecedentes', [PersonasAntecedentesController::class, 'index'])->name('personas_antecedentes.index');
+Route::get('personas/{persona}/personal_antecedentes/create', [PersonasAntecedentesController::class, 'create'])->name('personal_antecedentes.create');
+
+
 Route::resource('familiares_antecedentes', FamiliaresAntecedentesController::class);
 Route::resource('quirurgicos_antecedentes', QuirurgicosAntecedentesController::class);
 Route::resource('habitos', HabitosController::class);
@@ -102,6 +107,13 @@ Route::delete('personas/{persona}/afamiliares/{antecedente}', [PersonasAfamiliar
 
 
 // Ruta para mostrar los antecedentes quirurgicos de una persona
-Route::get('personas/{persona}/quirurgicos', [PersonasAquirurgicosController::class, 'index'])->name('personas_aquirurgicos.index');
+Route::get('personas/{personaId}/antecedentes-quirurgicos', [PersonasAquirurgicosController::class, 'index'])->name('personas_aquirurgicos.index');
 Route::post('personas/{persona}/quirurgicos', [PersonasAquirurgicosController::class, 'store'])->name('personas_aquirurgicos.store');
 Route::delete('personas/{persona}/quirurgicos/{antecedente}', [PersonasAquirurgicosController::class, 'destroy'])->name('personas_aquirurgicos.destroy');
+Route::post('quirurgicos-antecedentes', [QuirurgicosAntecedentesController::class, 'store'])->name('quirurgicos_antecedentes.store');
+//Route::resource('personas_aquirurgicos', PersonasAquirurgicosController::class);
+//Route::get('personas_aquirurgicos/{personaId}', [PersonasAquirurgicosController::class, 'index'])->name('personas_aquirurgicos.index');
+
+
+
+
