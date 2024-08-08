@@ -74,9 +74,9 @@ Route::delete('personas_contactos/{persona_id}/{contacto_id}', [PersonaContactos
 
 //Antecedentes Personales
 Route::resource('personal_antecedentes', PersonalAntecedentesController::class);
-Route::post('personas/{persona}/personal_antecedentes', [PersonasAntecedentesController::class, 'store'])->name('personal_antecedentes.store');
-Route::get('personas/{persona}/personal_antecedentes', [PersonasAntecedentesController::class, 'index'])->name('personas_antecedentes.index');
-Route::get('personas/{persona}/personal_antecedentes/create', [PersonasAntecedentesController::class, 'create'])->name('personal_antecedentes.create');
+//Route::post('personas/{persona}/personal_antecedentes', [PersonasAntecedentesController::class, 'store'])->name('personal_antecedentes.store');
+//Route::get('personas/{persona}/personal_antecedentes', [PersonasAntecedentesController::class, 'index'])->name('personas_antecedentes.index');
+//Route::get('personas/{persona}/personal_antecedentes/create', [PersonasAntecedentesController::class, 'create'])->name('personal_antecedentes.create');
 
 
 Route::resource('familiares_antecedentes', FamiliaresAntecedentesController::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Persona;
 use App\Models\QuirurgicosAntecedentes;
 use Illuminate\Http\Request;
 
@@ -20,13 +21,10 @@ class QuirurgicosAntecedentesController extends Controller
 
     public function store(Request $request)
     {
-        $antecedente = QuirurgicosAntecedentes::create($request->all());
-    
-        return response()->json([
-            'success' => true,
-            'id' => $antecedente->id,
-            'antequi' => $antecedente->antequi
-        ]);
+        $paciente_id=$request->input('paciente_id');
+        $antecedentes = QuirurgicosAntecedentes::create($request->all());
+
+        return redirect()->route('personas_aquirurgicos.index', $paciente_id);
     }
 
     public function show($id)

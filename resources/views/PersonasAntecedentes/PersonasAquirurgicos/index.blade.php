@@ -60,6 +60,7 @@
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createNewAntecedenteModal">Nuevo</button>
                         </div>
                     </div>
+                    <input type="hidden" name= "paciente_id" value="{{ $persona->id }}">
                 </form>
             </div>
             <div class="modal-footer">
@@ -85,6 +86,7 @@
                         <label for="antequi" class="form-label">Descripción del Antecedente Quirúrgico:</label>
                         <textarea name="antequi" class="form-control" id="antequi" rows="5" required></textarea>
                     </div>
+                    <input type="hidden" name= "paciente_id" value="{{ $persona->id }}">
                 </form>
             </div>
             <div class="modal-footer">
