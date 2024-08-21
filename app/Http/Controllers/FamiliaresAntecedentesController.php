@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Persona;
 use App\Models\FamiliaresAntecedentes;
 use Illuminate\Http\Request;
 
@@ -20,13 +21,11 @@ class FamiliaresAntecedentesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'antefam' => 'required|string|max:230',
-        ]);
-
-        FamiliaresAntecedentes::create($request->all());
-        return redirect()->route('familiares_antecedentes.index')->with('success', 'Antecedente creado con éxito.');
-    }
+        $paciente_id=$request->input('paciente_id');
+        $antecedentes = FamiliaresAntecedentes::create($request->all());
+        
+        return redirect()->route('personas_afamiliares.index', $paciente_id);
+    }                           
 
     public function show($id)
     {

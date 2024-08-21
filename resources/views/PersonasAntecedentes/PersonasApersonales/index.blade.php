@@ -1,38 +1,31 @@
 @extends('layouts.app')
-
-@section('title', 'Listado de Antecedentes Personales')
-
+@section('title', 'Gestión de Antecedentes Personales')
 @section('content')
 <div class="container">
-    <h1>Antecedentes Personales de {{ $persona->nombres }} {{ $persona->apellidos }}</h1>
-
-    <!-- Botón para abrir el modal de asociación -->
+    <h1>Gestión de Antecedentes Personales de {{ $persona->nombres }} {{ $persona->apellidos }}</h1>
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createPersonaAntecedenteModal">
-        Asociar Antecedente
+        Asociar Antecedente Personal
     </button>
-
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Descripción</th>
-                <th>Fecha de Ingreso</th>
+                <th>Antecedente Personal</th>
+                <th>Fecha de Asociación</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($antecedentes as $antecedente)
+            @foreach($persona->personalAntecedentes as $antecedente)
             <tr>
                 <td>{{ $antecedente->id }}</td>
                 <td>{{ $antecedente->anteper }}</td>
-                <td>{{ $antecedente->created_at->format('d-m-Y') }}</td>
+                <td>{{ $antecedente->pivot->created_at->format('d-m-Y') }}</td>
                 <td>
-                    <a href="{{ route('personal_antecedentes.show', $antecedente->id) }}" class="btn btn-info">Ver</a>
-                    <a href="{{ route('personal_antecedentes.edit', $antecedente->id) }}" class="btn btn-warning">Editar</a>
-                    <form action="{{ route('personal_antecedentes.destroy', [$persona->id, $antecedente->id]) }}" method="POST" style="display:inline-block;">
+                    <form action="{{ route('personas_antecedentes.destroy', [$persona->id, $antecedente->id]) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn btn-danger">Desasociar</button>
                     </form>
                 </td>
             </tr>
@@ -51,23 +44,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="associateAntecedenteForm" action="{{ route('personas_antecedentes.store', $persona->id) }}" method="POST">
+                
+                <form id="createPersonaAntecedenteForm" action="{{ route('personas_antecedentes.store', $persona->id) }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="personal_antecedente_id" class="form-label">Seleccionar Antecedente:</label>
-                        <select name="personal_antecedente_id" id="personal_antecedente_id" class="form-select" required>
-                            <option value="" disabled selected>Seleccione un antecedente</option>
-                            @foreach($todosLosAntecedentes as $antecedente)
-                            <option value="{{ $antecedente->id }}">{{ $antecedente->anteper }}</option>
-                            @endforeach
-                        </select>
+                        <label for="personal_antecedente_id" class="form-label">Seleccione el Antecedente Personal</label>
+                        <div class="input-group">
+                            <select name="personal_antecedente_id" id="personal_antecedente_id" class="form-control" required>
+                                @foreach($antecedentes as $antecedente)
+                                    <option value="{{ $antecedente->id }}">{{ $antecedente->anteper }}</option>
+                                @endforeach
+                            </select>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createNewAntecedenteModal">Nuevo</button>
+                        </div>
                     </div>
+                    <input type="hidden" name="paciente_id" value="{{ $persona->id }}">
                 </form>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createNewAntecedenteModal">Crear Nuevo Antecedente</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" form="associateAntecedenteForm" class="btn btn-primary">Asociar</button>
+                <button type="submit" form="createPersonaAntecedenteForm" class="btn btn-primary">Asociar</button>
             </div>
         </div>
     </div>
@@ -85,10 +81,10 @@
                 <form id="createNewAntecedenteForm" action="{{ route('personal_antecedentes.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="anteper" class="form-label">Descripción del Antecedente Personal:</label>
-                        <textarea name="anteper" class="form-control" id="anteper" rows="5" required></textarea>
+                        <label for="anteper" class="form-label">Descripción Antecedente Personal:</label>
+                        <input type="text" name="anteper" id="anteper" class="form-control" required>
                     </div>
-                    <input type="hidden" name= "paciente_id" value="{{ $persona->id }}">
+                    <input type="hidden" name="paciente_id" value="{{ $persona->id }}">
                 </form>
             </div>
             <div class="modal-footer">

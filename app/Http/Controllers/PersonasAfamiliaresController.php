@@ -8,30 +8,46 @@ use Illuminate\Http\Request;
 
 class PersonasAfamiliaresController extends Controller
 {
-    public function index($persona_id)
+    public function index($personaId)
     {
-        $persona = Persona::findOrFail($persona_id);
-        $antecedentes = FamiliaresAntecedentes::all();
+
+
+        $persona = Persona::findOrFail($personaId);
+        $antecedentes = FamiliaresAntecedentes::all(); // Obtener todos los antecedentes quirúrgicos disponibles
         return view('PersonasAntecedentes/PersonasAfamiliares.index', compact('persona', 'antecedentes'));
     }
 
-    public function store(Request $request, $persona_id)
+    public function create()
+    {
+        $personas = Persona::all();
+        $antecedentes = FamiliaresAntecedentes::all();
+        return view('PersonasAntecedentes/PersonasAfamiliares.create', compact('personas', 'antecedentes'));
+    }
+
+    public function store(Request $request, $personaId)
     {
         $request->validate([
             'familiares_antecedente_id' => 'required|exists:familiares_antecedentes,id',
         ]);
 
-        $persona = Persona::findOrFail($persona_id);
+        $persona = Persona::findOrFail($personaId);
         $persona->familiaresAntecedentes()->attach($request->familiares_antecedente_id);
 
-        return redirect()->route('personas_afamiliares.index', $persona_id)->with('success', 'Antecedente familiar asociado con éxito.');
+        return redirect()->route('personas_afamiliares.index', $personaId)->with('success', 'Antecedente familiar asociado con éxito.');
     }
 
-    public function destroy($persona_id, $antecedente_id)
+    public function show($id)
     {
-        $persona = Persona::findOrFail($persona_id);
-        $persona->familiaresAntecedentes()->detach($antecedente_id);
+        $persona = Persona::findOrFail($id);
+        $antecedente = FamiliaresAntecedentes::findOrFail($id);
+        return view('PersonasAntecedentes.PersonasAfamiliares.index', compact('antecedente','persona'));
+    }
 
-        return redirect()->route('personas_afamiliares.index', $persona_id)->with('success', 'Antecedente familiar desasociado con éxito.');
+    public function destroy($personaId, $antecedenteId)
+    {
+        $persona = Persona::findOrFail($personaId);
+        $persona->familiaresAntecedentes()->detach($antecedenteId);
+
+        return redirect()->route('personas_afamiliares.index', $personaId)->with('success', 'Antecedente familiar desasociado con éxito.');
     }
 }

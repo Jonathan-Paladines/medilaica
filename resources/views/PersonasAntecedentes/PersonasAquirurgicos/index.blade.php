@@ -8,7 +8,7 @@
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createPersonaAntecedenteModal">
         Asociar nuevo Antecedente
     </button>
-
+    
     <table class="table table-bordered">
         <thead>
             <tr>

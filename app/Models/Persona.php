@@ -89,7 +89,7 @@ class Persona extends Model
 
     public function personalAntecedentes()
     {
-        return $this->belongsToMany(PersonalAntecedentes::class, 'personas_antecedentes', 'persona_id', 'personal_antecedente_id')
+        return $this->belongsToMany(PersonalAntecedentes::class, 'personas_antecedentes', 'persona_id', 'personal_antecedente_id', 'personas_apersonales')
                     ->withTimestamps();
     }
 

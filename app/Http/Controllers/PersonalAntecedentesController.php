@@ -10,35 +10,30 @@ class PersonalAntecedentesController extends Controller
 {
     public function index($persona_id)
     {
-        $persona = Persona::findOrFail($persona_id);
-        $antecedentes = PersonalAntecedentes::all();
-        return view('Antecedentes.APersonales.index', compact('persona','antecedentes'));
+        //$persona = Persona::findOrFail($persona_id);
+        $antecedentes = $persona->personalAntecedentes;
+        return view('Antecedentes.APersonales.index', compact('antecedentes'));
     }
 
-    public function create($persona_id)
+    public function create()
+    {
+        
+        return view('Antecedentes.APersonales.create');
+    }
+
+    public function store(Request $request)
+    {
+        $paciente_id=$request->input('paciente_id');
+        $antecedentes = PersonalAntecedentes::create($request->all());
+
+        return redirect()->route('personal_antecedentes.index', $paciente_id);
+    }
+
+    public function show($id, $persona_id)
     {
         $persona = Persona::findOrFail($persona_id);
-        return view('Antecedentes.APersonales.create', compact('persona'));
-    }
-
-    public function store(Request $request, $persona_id)
-    {
-        $request->validate([
-            'anteper' => 'required|string|max:230',
-        ]);
-
-        $antecedente = new PersonalAntecedentes($request->all());
-        $antecedente->persona_id = $persona_id;
-        $antecedente->save();
-
-        PersonalAntecedentes::create($request->all());
-        return redirect()->route('personal_antecedentes.index', $persona_id)->with('success', 'Antecedente creado con éxito.');
-    }
-
-    public function show($id)
-    {
         $antecedente = PersonalAntecedentes::findOrFail($id);
-        return view('Antecedentes.APersonales.show', compact('antecedente'));
+        return view('Antecedentes.APersonales.show', compact('antecedente','persona'));
     }
 
     public function edit($id)
