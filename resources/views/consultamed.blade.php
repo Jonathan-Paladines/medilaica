@@ -360,9 +360,116 @@
                 <!-- Begin Page Content -->
 <div class="container-fluid mt-3">
     <div class="row">
-        <legend>Principal</legend>
+        <legend>Consulta Médica</legend>
+        
+        <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check col-sm-2 mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
 
-            <img src="{{ asset('img/medilaica-001.png') }}" alt="Medilaica_fondo" style="width:900px;height:500px;" class="col-sm-10 mb-10">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check col-sm-2 mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check col-sm-2 mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check col-sm-2 mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check col-sm-2 mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check col-sm-2 mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check col-sm-2 mb-2">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check col-sm-2 mb-2">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-8 mb-3">
+                <label class="form-control" for="observacion">Observación</label>
+                <textarea name="observacion" class="form-control" id="observacion" rows="5" required></textarea>
+            </div>
 
             <div class="form-group col-sm-8 mb-3"><br>
             <a href="{{ url('/personas') }}" type="button" class="btn btn-success">Sección Pacientes</a>

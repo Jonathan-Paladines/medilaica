@@ -9,8 +9,8 @@ class Cie10Controller extends Controller
 {
     public function index()
     {
-        $Cie10s = Cie10::paginate(50);
-        return view('cie10.index', compact('Cie10s'));
+        $cie10 = Cie10::all();
+        return view('cie10.index', compact('cie10'));
     }
 
     public function create()
@@ -20,8 +20,13 @@ class Cie10Controller extends Controller
 
     public function store(Request $request)
     {
-        $Cie10 = Cie10::create($request->all());
-        return redirect()->route('cie10.index')->with('success', 'Código CIE10 creado correctamente.');
+        //$request->validate([
+        //    'codigo' => 'required|string|max:255',
+        //    'descripcion' => 'required|string|max:255',
+        //]);
+
+        Cie10::create($request->all());
+        return redirect()->route('cie10.index')->with('success', 'CIE10 creado con éxito.');
     }
 
     public function show(Cie10 $cie10)
@@ -36,24 +41,14 @@ class Cie10Controller extends Controller
 
     public function update(Request $request, Cie10 $cie10)
     {
+
         $cie10->update($request->all());
-        return redirect()->route('cie10.index')->with('success', 'Código CIE10 actualizado correctamente.');
+        return redirect()->route('cie10.index')->with('success', 'CIE10 actualizado con éxito.');
     }
 
     public function destroy(Cie10 $cie10)
     {
         $cie10->delete();
-        return redirect()->route('cie10.index')->with('success', 'Código CIE10 eliminado correctamente.');
-    }
-
-    public function autocomplete(Request $request)
-    {
-        $term = $request->get('term');
-
-        $results = Cie10::where('detalle_cie', 'LIKE', '%' . $term . '%')
-                        ->orWhere('codigo', 'LIKE', '%' . $term . '%')
-                        ->get(['id', 'detalle_cie as value']); // 'value' es el formato que jQuery UI espera
-
-        return response()->json($results);
+        return redirect()->route('cie10.index')->with('success', 'CIE10 eliminado con éxito.');
     }
 }

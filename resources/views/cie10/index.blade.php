@@ -11,63 +11,38 @@
         <input type="text" id="search-cie10" class="form-control" placeholder="Escribe para buscar...">
     </div>
 
-    <table class="table mt-3">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Código</th>
-                <th>Enfermedad</th>
+                <th>Descripción</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($Cie10s as $Cie10)
+            @foreach($cie10 as $item)
             <tr>
-                <td>{{ $Cie10->codigo }}</td>
-                <td>{{ $Cie10->detalle_cie }}</td>
+                <td>{{ $item->codigo }}</td>
+                <td>{{ $item->detalle_cie }}</td>
                 <td>
-                    <a href="{{ route('cie10.edit', $Cie10->id) }}" class="btn btn-warning">Editar</a>
-                    <form action="{{ route('cie10.destroy', $Cie10->id) }}" method="POST" style="display:inline-block;">
+                    <a href="{{ route('cie10.show', $item->id) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ route('cie10.edit', $item->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ route('cie10.destroy', $item->id) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                     </form>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
-
-    <!-- Aquí es donde Laravel renderiza la paginación -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            {{ $Cie10s->links() }}
-        </ul>
-    </nav>
 </div>
 @endsection
 
 @section('scripts')
 <script>
-$(document).ready(function() {
-    $("#search-cie10").autocomplete({
-        source: function(request, response) {
-            $.ajax({
-                url: "{{ route('cie10.autocomplete') }}",
-                data: {
-                    term: request.term
-                },
-                success: function(data) {
-                    response(data);
-                }
-            });
-        },
-        minLength: 2,
-        select: function(event, ui) {
-            // Puedes redirigir a la página de detalles de la enfermedad seleccionada, si lo deseas.
-            window.location.href = '/cie10/' + ui.item.id + '/edit';
-        }
-    });
-});
+
 </script>
 @endsection
 

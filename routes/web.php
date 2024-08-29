@@ -20,14 +20,24 @@ use App\Http\Controllers\PersonaHabitosController;
 use App\Http\Controllers\PersonasAntecedentesController;
 use App\Http\Controllers\PersonasAfamiliaresController;
 use App\Http\Controllers\PersonasAquirurgicosController;
-use App\Http\Controllers\CampoController;
+use App\Http\Controllers\RegionesDelCuerpoController;
+use App\Http\Controllers\OpcionesExamenFisicoController;
+use App\Http\Controllers\RcuerpoOefController;
+use App\Http\Controllers\DetalleExamenFisicoController;
+use App\Http\Controllers\ExamenFisicoController;
 use App\Http\Controllers\Cie10Controller;
-use App\Http\Controllers\ConsultaExamenFisicoController;
 use App\Http\Controllers\ConsultaMedicaController;
-use App\Http\Controllers\ResultadoController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/magician', function () {
+    return view('halo');
+});
+
+Route::get('/cmp', function () {
+    return view('consultamed');
 });
 
 // Rutas para Paciente
@@ -114,14 +124,12 @@ Route::post('personas/{persona}/quirurgicos', [PersonasAquirurgicosController::c
 Route::delete('personas/{persona}/quirurgicos/{antecedente}', [PersonasAquirurgicosController::class, 'destroy'])->name('personas_aquirurgicos.destroy');
 Route::post('quirurgicos-antecedentes', [QuirurgicosAntecedentesController::class, 'store'])->name('quirurgicos_antecedentes.store');
 
-//Rutas Consultas Médicas 
-Route::resource('consulta_medica', ConsultaMedicaController::class);
-//Rutas CIE10
+
+// Rutas para mostrar los exámenes físicos de una persona
+Route::resource('regiones_cuerpo', RegionesDelCuerpoController::class);
+Route::resource('opciones_examen_fisico', OpcionesExamenFisicoController::class);
+Route::resource('rcuerpo_oef', RcuerpoOefController::class);
+Route::resource('detalle_examen_fisico', DetalleExamenFisicoController::class);
+Route::resource('examen_fisico', ExamenFisicoController::class);
 Route::resource('cie10', Cie10Controller::class);
-Route::get('/cie10/autocomplete', [Cie10Controller::class, 'autocomplete'])->name('cie10.autocomplete');
-//Rutas Campo
-Route::resource('campos', CampoController::class);
-//Rutas Resultado
-Route::resource('resultado', ResultadoController::class);
-//Rutas Consulta exámen físico
-Route::resource('consulta_examen_fisico', ConsultaExamenFisicoController::class);
+Route::resource('consulta-medica', ConsultaMedicaController::class);

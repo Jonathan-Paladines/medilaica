@@ -44,6 +44,7 @@
                             <a class="collapse-item" href="{{ route('alergias.index') }}">Alergias</a>
                             <a class="collapse-item" href="{{ route('vacunas.index') }}">Vacunas</a>
                             <a class="collapse-item" href="{{ route('contactos.index') }}">Contactos</a>
+                            <a class="collapse-item" href="{{ route('cie10.index') }}">C. de Enfermedades</a>
                             <a class="collapse-item" href="404.html">Comodin</a>
                         </div>
                         <h6 class="collapse-header">Other Pages:</h6>

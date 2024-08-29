@@ -20,14 +20,19 @@ class ConsultaMedicaController extends Controller
 
     public function store(Request $request)
     {
-        $consulta = ConsultaMedica::create($request->all());
-        return redirect()->route('consulta_medica.index', 'consulta')->with('success', 'Consulta creada correctamente.');
+        $request->validate([
+            'persona_id' => 'required|integer',
+            'cie10_id' => 'required|integer',
+            'detalles' => 'required|string|max:255',
+        ]);
+
+        ConsultaMedica::create($request->all());
+        return redirect()->route('consulta-medica.index')->with('success', 'Consulta médica creada con éxito.');
     }
 
     public function show(ConsultaMedica $consultaMedica)
     {
-        $consultas = ConsultaMedica::all();
-        return view('consulta_medica.show', compact('consultas'));
+        return view('consulta_medica.show', compact('consultaMedica'));
     }
 
     public function edit(ConsultaMedica $consultaMedica)
@@ -37,13 +42,19 @@ class ConsultaMedicaController extends Controller
 
     public function update(Request $request, ConsultaMedica $consultaMedica)
     {
+        $request->validate([
+            'persona_id' => 'required|integer',
+            'cie10_id' => 'required|integer',
+            'detalles' => 'required|string|max:255',
+        ]);
+
         $consultaMedica->update($request->all());
-        return redirect()->route('consulta_medica.index')->with('success', 'Consulta actualizada correctamente.');
+        return redirect()->route('consulta-medica.index')->with('success', 'Consulta médica actualizada con éxito.');
     }
 
     public function destroy(ConsultaMedica $consultaMedica)
     {
         $consultaMedica->delete();
-        return redirect()->route('consulta_medica.index')->with('success', 'Consulta eliminada correctamente.');
+        return redirect()->route('consulta-medica.index')->with('success', 'Consulta médica eliminada con éxito.');
     }
 }

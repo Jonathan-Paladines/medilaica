@@ -3,20 +3,13 @@
 @section('content')
 <div class="container">
     <h1>Detalle de Catálogo Internacional de Enfermedades</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Detalle de Enfermedad</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ $Cie10->codigo }}</td>
-                <td>{{ $Cie10->detalle_cie }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="mb-3">
+        <label for="codigo" class="form-label">Código</label>
+        <input type="text" name="codigo" class="form-control" value="{{ $cie10->codigo }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="detalle_cie" class="form-label">Descripción</label>
+        <textarea name="detalle_cie" class="form-control" disabled>{{ $cie10->detalle_cie }}</textarea>
     <a href="{{ url('/') }}" class="btn btn-primary">Volver</a>
 </div>
 @endsection

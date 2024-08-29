@@ -7,16 +7,16 @@
     <h1>Crear Enfermedad</h1>
     <form action="{{ route('cie10.store') }}" method="POST">
         @csrf
-        <div class="form-group col-sm-3 mb-3">
-            <label for="codigo">Código:</label>
-            <input type="text" class="form-control" name="codigo" id="codigo" required>
+        <div class="mb-3">
+            <label for="codigo" class="form-label">Código</label>
+            <input type="text" name="codigo" class="form-control" required>
         </div>
-        <div class="form-group col-sm-3 mb-3">
-            <label for="detalle_cie">Enfermedad:</label>
-            <textarea class="form-control" name="detalle_cie" id="detalle_cie" required></textarea>
+        <div class="mb-3">
+            <label for="detalle_cie" class="form-label">Descripción</label>
+            <textarea name="detalle_cie" class="form-control" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{ url()->previous() }}" class="btn btn-warning">Volver</a>
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a href="{{ route('cie10.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 @endsection

@@ -4,20 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCie10Table extends Migration
+return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
         Schema::create('cie10', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo', 20);
-            $table->string('detalle_cie', 255);
+            $table->string('codigo');
+            $table->string('detalle_cie');
             $table->timestamps();
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('cie10');
     }
-}
+};

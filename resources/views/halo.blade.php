@@ -362,6 +362,21 @@
     <div class="row">
         <legend>Principal</legend>
 
+        <div class="btn mb-3"><span>Datos</span><br>
+                <a class="btn btn-danger" type="button" href="{{ url('/personas') }}">Pacientes</a>
+                <a class="btn btn-danger" type="button" href="{{ route('alergias.index') }}">Alergias</a>
+                <a class="btn btn-danger" type="button" href="{{ route('vacunas.create') }}">Vacunas</a>
+
+        </div><br>
+        <div class="btn mb-3"><span>Consulta Médica</span><br>
+                <a class="btn btn-info" type="button" href="{{ route('cie10.index') }}">C. de Enfermedades</a>
+                <a class="btn btn-info" type="button" href="{{ url('/regiones_cuerpo') }}">Regiones del cuerpo</a>
+                <a class="btn btn-info" type="button" href="{{ url('/opciones_examen_fisico') }}">Opciones del Ex. Físico</a>
+                <a class="btn btn-info" type="button" href="{{ url('/rcuerpo_oef') }}">Relación RC/OEF</a>
+                <a class="btn btn-info" type="button" href="{{ url('/detalle_examen_fisico') }}">Detalle del Examen Físico</a>
+                <a class="btn btn-info" type="button" href="{{ url('/examen_fisico') }}">Examen Físico</a>
+        </div>
+
             <img src="{{ asset('img/medilaica-001.png') }}" alt="Medilaica_fondo" style="width:900px;height:500px;" class="col-sm-10 mb-10">
 
             <div class="form-group col-sm-8 mb-3"><br>
