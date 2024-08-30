@@ -17,10 +17,15 @@ class ConsultaMedica extends Model
     {
         return $this->belongsTo(Cie10::class);
     }
+
+    public function detalles()
+{
+    return $this->belongsToMany(DetalleExamenFisico::class, 'consulta_detalle_examen_fisico');
+}
     
     public function persona()
     {
-        return $this->belongsTo(Persona::class);
+        return $this->belongsTo(Persona::class, 'id', 'nombres', 'apellidos');
     }
 }
 

@@ -10,7 +10,7 @@
         @csrf
         <div class="mb-3">
             <label for="rcuerpo_oef_id" class="form-label">Región Corporal/Examen Físico</label>
-            
+            {{ dd($rcuerpoOefs)}}
             <select name="rcuerpo_oef_id" class="form-control" required>
 
                 @foreach($rcuerpoOefs as $item)

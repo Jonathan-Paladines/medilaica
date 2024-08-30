@@ -132,4 +132,4 @@ Route::resource('rcuerpo_oef', RcuerpoOefController::class);
 Route::resource('detalle_examen_fisico', DetalleExamenFisicoController::class);
 Route::resource('examen_fisico', ExamenFisicoController::class);
 Route::resource('cie10', Cie10Controller::class);
-Route::resource('consulta-medica', ConsultaMedicaController::class);
+Route::resource('consulta_medica', ConsultaMedicaController::class);

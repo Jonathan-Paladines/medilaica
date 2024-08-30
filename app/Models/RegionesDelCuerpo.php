@@ -13,4 +13,7 @@ class RegionesDelCuerpo extends Model
     {
         return $this->belongsToMany(OpcionesExamenFisico::class, 'rcuerpo_oef', 'tcampo_id', 'campo_id');
     }
+    public function mostrarNombre(){
+        return $this->belongsTo(RegionesDelCuerpo::class, 'tipo');
+    }
 }

@@ -8,13 +8,15 @@
     <form action="{{ route('examen_fisico.store') }}" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="detalle_examen_fisico_id" class="form-label">Detalle Examen Físico</label>
-            <select name="detalle_examen_fisico_id" class="form-control" required>
-                @foreach($detalles as $detalle)
-                    <option value="{{ $detalle->id }}">{{ $detalle->estado }}</option>
-                @endforeach
-            </select>
-        </div>
+
+        <label for="detalle_examen_fisico_id" class="form-label">Detalle Examen Físico</label>
+        @foreach($arrayDetalles as $detalle)
+                <div class="form-check">
+                    <input type="checkbox" name="detalle" value="{{ $detalle['id']}}">
+                    <label>{{ $detalle['tipo']}} - {{ $detalle['campo']}}</label> 
+                
+                </div>
+        @endforeach
         <div class="mb-3">
             <label for="observacion" class="form-label">Observación</label>
             <textarea name="observacion" class="form-control" required></textarea>

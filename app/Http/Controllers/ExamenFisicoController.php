@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ExamenFisico;
 use App\Models\DetalleExamenFisico;
+use App\Models\OpcionesExamenFisico;
+use App\Models\RcuerpoOef;
+use App\Models\RegionesDelCuerpo;
 use Illuminate\Http\Request;
 
 class ExamenFisicoController extends Controller
@@ -16,8 +19,22 @@ class ExamenFisicoController extends Controller
 
     public function create()
     {
+        $arrayDetalles = array();
         $detalles = DetalleExamenFisico::all();
-        return view('examen_fisico.create', compact('detalles'));
+        $i = 0;
+        foreach ($detalles as $detalle){
+            $rcuerpooef = RcuerpoOef::findOrFail($detalle->rcuerpo_oef_id);
+            $rcuerpo = RegionesDelCuerpo::findOrFail($rcuerpooef->tcampo_id);
+            $opcionexamen = OpcionesExamenFisico::findOrFail($rcuerpooef->campo_id);
+            $arrayDetalles[$i]['id']=$detalle->id;
+            $arrayDetalles[$i]['tipo']=$rcuerpo->tipo;
+            $arrayDetalles[$i]['campo']=$opcionexamen->campo;
+            $i++;
+        }
+        //$regiones = RegionesDelCuerpo::all();
+        //var_dump($arrayDetalles);
+        //exit (0);
+        return view('examen_fisico.create', compact('arrayDetalles'));
     }
 
     public function store(Request $request)
@@ -64,4 +81,11 @@ class ExamenFisicoController extends Controller
 
         return redirect()->route('examen_fisico.index')->with('success', 'Examen Físico eliminado exitosamente.');
     }
+
+public function obtenerNomTipo($regionCuerpo_id)
+{
+    $regionCuerpo = RegionesDelCuerpo::findOrFail($regionCuerpo_id);
+
+}
+
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConsultaMedica;
+use App\Models\Persona;
+use App\Models\ExamenFisico;
 use Illuminate\Http\Request;
 
 class ConsultaMedicaController extends Controller
@@ -15,19 +17,26 @@ class ConsultaMedicaController extends Controller
 
     public function create()
     {
-        return view('consulta_medica.create');
+        $personas = Persona::all();
+        $examenes_fisicos = ExamenFisico::all();
+        return view('consulta_medica.create', compact('personas','examenes_fisicos'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'persona_id' => 'required|integer',
-            'cie10_id' => 'required|integer',
-            'detalles' => 'required|string|max:255',
-        ]);
-
-        ConsultaMedica::create($request->all());
-        return redirect()->route('consulta-medica.index')->with('success', 'Consulta médica creada con éxito.');
+        $consulta = new ConsultaMedica();
+        $consulta->paciente_id = $request->paciente_id;
+        $consulta->examen_fisico_id = $request->examen_fisico_id;
+        $consulta->motivo_consulta = $request->motivo_consulta;
+        $consulta->diagnostico = $request->diagnostico;
+        $consulta->tratamiento = $request->tratamiento;
+        $consulta->observaciones = $request->observaciones;
+        $consulta->save();
+    
+        // Guardar los detalles del examen físico seleccionados
+        $consulta->detalles()->attach($request->detalles);
+    
+        return redirect()->route('consulta_medica.index')->with('success', 'Consulta médica creada con éxito.');
     }
 
     public function show(ConsultaMedica $consultaMedica)
