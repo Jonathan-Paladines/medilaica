@@ -133,3 +133,5 @@ Route::resource('detalle_examen_fisico', DetalleExamenFisicoController::class);
 Route::resource('examen_fisico', ExamenFisicoController::class);
 Route::resource('cie10', Cie10Controller::class);
 Route::resource('consulta_medica', ConsultaMedicaController::class);
+//Route::get('consulta_medica/create/{persona_id}', [ConsultaMedicaController::class, 'create'])->name('consulta_medica.create');
+Route::get('consulta_medica/create/{persona_id?}', [ConsultaMedicaController::class, 'create'])->name('consulta_medica.create');

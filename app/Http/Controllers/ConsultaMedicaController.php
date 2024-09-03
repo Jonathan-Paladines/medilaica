@@ -15,17 +15,17 @@ class ConsultaMedicaController extends Controller
         return view('consulta_medica.index', compact('consultas'));
     }
 
-    public function create()
+    public function create($personaId)
     {
-        $personas = Persona::all();
+        $persona = Persona::findOrFail($personaId);
         $examenes_fisicos = ExamenFisico::all();
-        return view('consulta_medica.create', compact('personas','examenes_fisicos'));
+        return view('consulta_medica.create', compact('persona','examenes_fisicos'));
     }
 
     public function store(Request $request)
     {
         $consulta = new ConsultaMedica();
-        $consulta->paciente_id = $request->paciente_id;
+        //$consulta->paciente_id = $request->paciente_id;
         $consulta->examen_fisico_id = $request->examen_fisico_id;
         $consulta->motivo_consulta = $request->motivo_consulta;
         $consulta->diagnostico = $request->diagnostico;

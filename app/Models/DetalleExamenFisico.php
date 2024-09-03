@@ -18,10 +18,5 @@ class DetalleExamenFisico extends Model
     {
         return $this->hasOne(ExamenFisico::class);
     }
-    public function rcuerponombre()
-    {
-        $idtcampo = $this->belongsTo(RcuerpoOef::class, 'rcuerpo_oef_id');
-        return 'prueba';
-    }
 }
 

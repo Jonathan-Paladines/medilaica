@@ -12,7 +12,7 @@
         <label for="detalle_examen_fisico_id" class="form-label">Detalle Examen Físico</label>
         @foreach($arrayDetalles as $detalle)
                 <div class="form-check">
-                    <input type="checkbox" name="detalle" value="{{ $detalle['id']}}">
+                    <input type="checkbox" name="detalle_examen_fisico_id[]" value="{{ $detalle['id']}}">
                     <label>{{ $detalle['tipo']}} - {{ $detalle['campo']}}</label> 
                 
                 </div>

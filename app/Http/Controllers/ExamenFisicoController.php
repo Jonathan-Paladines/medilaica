@@ -13,8 +13,11 @@ class ExamenFisicoController extends Controller
 {
     public function index()
     {
-        $examenes = ExamenFisico::with('detalle')->get();
-        return view('examen_fisico.index', compact('examenes'));
+        $examenesAgrupados = ExamenFisico::with('detalle.rcuerpoOef.region', 'detalle.rcuerpoOef.opcionExamenFisico')
+        ->get()
+        ->groupBy('observacion');
+    
+        return view('examen_fisico.index', compact('examenesAgrupados'));
     }
 
     public function create()
@@ -39,19 +42,33 @@ class ExamenFisicoController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
-            'detalle_examen_fisico_id' => 'required',
+            'detalle_examen_fisico_id' => 'required|array',
             'observacion' => 'required|string',
         ]);
+    
+        foreach ($request->detalle_examen_fisico_id as $detalle_id) {
+            ExamenFisico::create([
+                'detalle_examen_fisico_id' => $detalle_id,
+                'observacion' => $request->observacion,
+            ]);
+        }
 
-        ExamenFisico::create($request->all());
         return redirect()->route('examen_fisico.index')->with('success', 'Examen Físico creado exitosamente.');
     }
 
     public function show($id)
     {
-        $examenFisico = ExamenFisico::with('detalle')->findOrFail($id);
-        return view('examen_fisico.show', compact('examenFisico'));
+        //$examenFisico = ExamenFisico::with('detalle')->findOrFail($id);
+        //return view('examen_fisico.show', compact('examenFisico'));
+
+        $examenFisicoDetalles = ExamenFisico::where('id', $id)
+        ->with('detalle.rcuerpoOef.region', 'detalle.rcuerpoOef.opcionExamenFisico')
+        ->get();
+    
+    return view('examen_fisico.show', compact('examenFisicoDetalles'));
+
     }
 
     public function edit($id)
