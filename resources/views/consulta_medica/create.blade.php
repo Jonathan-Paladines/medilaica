@@ -38,10 +38,20 @@
             <textarea name="motivo_consulta" class="form-control"></textarea>
         </div>
 
+        <!-- Motivo de consulta -->
+        <div class="form-group col-sm-6 mb-3">
+            <label for="enfermedad_actual">Enfermedad actual:</label>
+            <textarea name="enfermedad_actual" class="form-control"></textarea>
+        </div>
+
         <!-- Diagnóstico -->
         <div class="form-group col-sm-6 mb-3">
-            <label for="diagnostico">Diagnóstico:</label>
-            <textarea name="diagnostico" class="form-control"></textarea>
+            <label for="cie10_id">Diagnóstico:</label>
+            <select name="cie10_id" class="form-control">
+                @foreach($cie10 as $diagnostico)
+                    <option value="{{ $diagnostico->id }}">{{ $diagnostico->codigo }} - {{ $diagnostico->detalle_cie }}</option>
+                @endforeach
+            </select>
         </div>
 
         <!-- Tratamiento -->
@@ -67,7 +77,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="examenFisicoLabel">Revisar Examen Físico</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

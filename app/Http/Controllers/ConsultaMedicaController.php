@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ConsultaMedica;
 use App\Models\Persona;
 use App\Models\ExamenFisico;
+use App\Models\Cie10;
 use Illuminate\Http\Request;
 
 class ConsultaMedicaController extends Controller
@@ -19,7 +20,8 @@ class ConsultaMedicaController extends Controller
     {
         $persona = Persona::findOrFail($personaId);
         $examenes_fisicos = ExamenFisico::all();
-        return view('consulta_medica.create', compact('persona','examenes_fisicos'));
+        $cie10 = Cie10::all(); // Obtener los diagnósticos disponibles
+        return view('consulta_medica.create', compact('persona','examenes_fisicos','cie10'));
     }
 
     public function store(Request $request)
@@ -28,7 +30,8 @@ class ConsultaMedicaController extends Controller
         //$consulta->paciente_id = $request->paciente_id;
         $consulta->examen_fisico_id = $request->examen_fisico_id;
         $consulta->motivo_consulta = $request->motivo_consulta;
-        $consulta->diagnostico = $request->diagnostico;
+        $consulta->enfermedad_actual = $request->enfermedad_actual;
+        $consulta->cie10_id = $request->cie10_id;
         $consulta->tratamiento = $request->tratamiento;
         $consulta->observaciones = $request->observaciones;
         $consulta->save();
