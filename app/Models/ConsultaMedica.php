@@ -10,7 +10,8 @@ class ConsultaMedica extends Model
     
     public function examenFisico()
     {
-        return $this->belongsTo(ExamenFisico::class);
+        //return $this->belongsTo(ExamenFisico::class);
+        return $this->hasMany(ExamenFisico::class);
     }
     
     public function cie10()

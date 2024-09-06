@@ -23,6 +23,10 @@
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
         <a href="{{ route('examen_fisico.index') }}" class="btn btn-secondary">Cancelar</a>
+
+        <input type="hidden" name="personaId" value="{{ $personaId }}">
+        
+
     </form>
 </div>
 @endsection

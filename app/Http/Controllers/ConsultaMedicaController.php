@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\ConsultaMedica;
 use App\Models\Persona;
+use App\Models\DetalleExamenFisico;
 use App\Models\ExamenFisico;
+use App\Models\OpcionesExamenFisico;
+use App\Models\RcuerpoOef;
+use App\Models\RegionesDelCuerpo;
 use App\Models\Cie10;
 use Illuminate\Http\Request;
 
@@ -20,8 +24,28 @@ class ConsultaMedicaController extends Controller
     {
         $persona = Persona::findOrFail($personaId);
         $examenes_fisicos = ExamenFisico::all();
+        $examenesAgrupados = ExamenFisico::with('detalle.rcuerpoOef.region', 'detalle.rcuerpoOef.opcionExamenFisico')
+        ->get()
+        ->groupBy('observacion');
         $cie10 = Cie10::all(); // Obtener los diagnósticos disponibles
-        return view('consulta_medica.create', compact('persona','examenes_fisicos','cie10'));
+
+            // Obtener los detalles del examen físico
+            $arrayDetalles = array();
+            $detalles = DetalleExamenFisico::all();
+            $i = 0;
+            foreach ($detalles as $detalle) {
+                $rcuerpooef = RcuerpoOef::findOrFail($detalle->rcuerpo_oef_id);
+                $rcuerpo = RegionesDelCuerpo::findOrFail($rcuerpooef->tcampo_id);
+                $opcionexamen = OpcionesExamenFisico::findOrFail($rcuerpooef->campo_id);
+                $arrayDetalles[$i]['id'] = $detalle->id;
+                $arrayDetalles[$i]['tipo'] = $rcuerpo->tipo;
+                $arrayDetalles[$i]['campo'] = $opcionexamen->campo;
+                $i++;
+            }
+
+         // Pasar también el ID de la consulta médica
+        $consultaMedica = new ConsultaMedica(); // Puedes modificarlo según tu lógica para obtener el ID correcto.
+        return view('consulta_medica.create', compact('persona', 'examenes_fisicos', 'cie10', 'examenesAgrupados', 'consultaMedica', 'arrayDetalles'));
     }
 
     public function store(Request $request)
@@ -38,6 +62,14 @@ class ConsultaMedicaController extends Controller
     
         // Guardar los detalles del examen físico seleccionados
         $consulta->detalles()->attach($request->detalles);
+
+        foreach ($request->detalle_examen_fisico_id as $detalle_id) {
+            ExamenFisico::create([
+                'detalle_examen_fisico_id' => $detalle_id,
+                'observacion' => $request->observacion,
+                'consulta_medica_id' => $request->consulta_medica_id // Relacionar con la consulta médica
+            ]);
+        }
     
         return redirect()->route('consulta_medica.index')->with('success', 'Consulta médica creada con éxito.');
     }

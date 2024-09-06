@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Persona;
 use App\Models\ExamenFisico;
 use App\Models\DetalleExamenFisico;
 use App\Models\OpcionesExamenFisico;
@@ -20,7 +21,7 @@ class ExamenFisicoController extends Controller
         return view('examen_fisico.index', compact('examenesAgrupados'));
     }
 
-    public function create()
+    public function create($personaId)
     {
         $arrayDetalles = array();
         $detalles = DetalleExamenFisico::all();
@@ -37,21 +38,24 @@ class ExamenFisicoController extends Controller
         //$regiones = RegionesDelCuerpo::all();
         //var_dump($arrayDetalles);
         //exit (0);
-        return view('examen_fisico.create', compact('arrayDetalles'));
+        return view('examen_fisico.create', compact('arrayDetalles', 'personaId'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $personaId)
     {
-
-        $request->validate([
-            'detalle_examen_fisico_id' => 'required|array',
-            'observacion' => 'required|string',
-        ]);
-    
+        //var_dump($personaId);
+        //exit(0);
+        // $request->validate([
+        //     'detalle_examen_fisico_id' => 'required|array',
+        //     'observacion' => 'required|string',
+        //     'persona_id' => 'required|exists:personas,id',
+        // ]);
+        $persona = Persona::findOrFail($personaId);
         foreach ($request->detalle_examen_fisico_id as $detalle_id) {
             ExamenFisico::create([
                 'detalle_examen_fisico_id' => $detalle_id,
                 'observacion' => $request->observacion,
+                'persona_id' => $request-> $persona,
             ]);
         }
 

@@ -107,7 +107,7 @@
                         </a>
                     </div>
                     <div class="btn-wrapper mb-3">
-                        <a href="{{ route('examen_fisico.index', $persona->id) }}" class="btn btn-secondary btn-circle btn-lg" name="ver_antecedentes personales" title="Exámen Físico">  
+                        <a href="{{ route('examen_fisico.create', ['personaId' => $persona->id]) }}" class="btn btn-secondary btn-circle btn-lg" name="ver_examenes_fisicos" title="Exámen Físico">  
                             <i class="fa fa-folder-open"></i>   
                         </a>
                         <a href="{{ route('consulta_medica.create', $persona->id) }}" class="btn btn-secondary btn-circle btn-lg" name="Ver antecedentes quirurgicos" title="Consulta Medica">  

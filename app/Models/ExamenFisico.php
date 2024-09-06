@@ -16,7 +16,13 @@ class ExamenFisico extends Model
     
     public function consultaMedica()
     {
-        return $this->hasOne(ConsultaMedica::class);
+        //return $this->hasOne(ConsultaMedica::class);
+        return $this->belongsTo(ConsultaMedica::class);
+    }
+
+    public function persona()
+    {
+        return $this->belongsTo(Persona::class);
     }
 }
 
