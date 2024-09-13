@@ -3,11 +3,9 @@
 @section('title', 'Crear Examen Físico')
 
 @section('content')
-<h1>Esto es una prueba 1 - Create</h1>
-
 <div class="container">
     <h1>Crear Examen Físico</h1>
-    <form action="{{ route('examen_fisico.store', [$personaId]) }}" method="POST">
+    <form action="{{ route('examen_fisico.store', ['personaId' => $personaId]) }}" method="POST">
         @csrf
         <div class="mb-3">
 
@@ -23,14 +21,12 @@
             <label for="observacion" class="form-label">Observación</label>
             <textarea name="observacion" class="form-control" required></textarea>
         </div>
-        <input type="hidden" name="persona_id" value="{{ $personaId }}">
-
         <button type="submit" class="btn btn-success">Guardar</button>
         <a href="{{ route('examen_fisico.index') }}" class="btn btn-secondary">Cancelar</a>
 
-    
+        <input type="hidden" name="personaId" value="{{ $personaId }}">
+        
+
     </form>
 </div>
-
-
 @endsection

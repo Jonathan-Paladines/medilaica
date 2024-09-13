@@ -25,27 +25,29 @@ class ConsultaMedicaController extends Controller
         $persona = Persona::findOrFail($personaId);
         $examenes_fisicos = ExamenFisico::all();
         $examenesAgrupados = ExamenFisico::with('detalle.rcuerpoOef.region', 'detalle.rcuerpoOef.opcionExamenFisico')
-        ->get()
-        ->groupBy('observacion');
-        $cie10 = Cie10::all(); // Obtener los diagnósticos disponibles
-
-            // Obtener los detalles del examen físico
-            $arrayDetalles = array();
-            $detalles = DetalleExamenFisico::all();
-            $i = 0;
-            foreach ($detalles as $detalle) {
-                $rcuerpooef = RcuerpoOef::findOrFail($detalle->rcuerpo_oef_id);
-                $rcuerpo = RegionesDelCuerpo::findOrFail($rcuerpooef->tcampo_id);
-                $opcionexamen = OpcionesExamenFisico::findOrFail($rcuerpooef->campo_id);
-                $arrayDetalles[$i]['id'] = $detalle->id;
-                $arrayDetalles[$i]['tipo'] = $rcuerpo->tipo;
-                $arrayDetalles[$i]['campo'] = $opcionexamen->campo;
-                $i++;
-            }
-
-         // Pasar también el ID de la consulta médica
-        $consultaMedica = new ConsultaMedica(); // Puedes modificarlo según tu lógica para obtener el ID correcto.
-        return view('consulta_medica.create', compact('persona', 'examenes_fisicos', 'cie10', 'examenesAgrupados', 'consultaMedica', 'arrayDetalles'));
+            ->get()
+            ->groupBy('observacion');
+        $cie10 = Cie10::all();
+    
+        $detalles = DetalleExamenFisico::all();
+        $rcuerpooefs = RcuerpoOef::whereIn('id', $detalles->pluck('rcuerpo_oef_id'))->get();
+        $regiones = RegionesDelCuerpo::whereIn('id', $rcuerpooefs->pluck('tcampo_id'))->get();
+        $opcionesExamenes = OpcionesExamenFisico::whereIn('id', $rcuerpooefs->pluck('campo_id'))->get();
+    
+        $arrayDetalles = [];
+        foreach ($detalles as $detalle) {
+            $rcuerpooef = $rcuerpooefs->where('id', $detalle->rcuerpo_oef_id)->first();
+            $rcuerpo = $regiones->where('id', $rcuerpooef->tcampo_id)->first();
+            $opcionexamen = $opcionesExamenes->where('id', $rcuerpooef->campo_id)->first();
+            $arrayDetalles[] = [
+                'id' => $detalle->id,
+                'tipo' => $rcuerpo->tipo,
+                'campo' => $opcionexamen->campo
+            ];
+        }
+    
+        $consultaMedica = new ConsultaMedica();
+        return view('consulta_medica.create', compact('persona', 'examenes_fisicos', 'cie10', 'examenesAgrupados', 'consultaMedica', 'arrayDetalles', 'personaId'));
     }
 
     public function store(Request $request)

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Listado de Exámenes Físicos</h1>
-    <a href="{{ route('examen_fisico.create') }}" class="btn btn-primary mb-3">Crear Examen Físico</a>
+    <a href="{{ route('examen_fisico.create', [$personaId]) }}" class="btn btn-primary mb-3">Crear Examen Físico</a>
 
     <table class="table table-striped">
         <thead>
@@ -28,11 +28,12 @@
                         </td>
                         <td>{{ $examen->observacion }}</td>
                         <td>
-                            <a href="{{ route('examen_fisico.show', $examen->id) }}" class="btn btn-info btn-sm">Ver</a>
-                            <a href="{{ route('examen_fisico.edit', $examen->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                            <form action="{{ route('examen_fisico.destroy', $examen->id) }}" method="POST" style="display:inline-block;">
+                            <a href="{{ route('examen_fisico.show', ['personaId' => $personaId, 'id' => $examen->id]) }}" class="btn btn-info btn-sm">Ver</a>
+                            
+                            <form action="{{ route('examen_fisico.destroy', ['personaId' => $personaId, 'id' => $examen->id]) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
+                                <input type="hidden" name="persona_id" value="{{ $personaId }}">
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                             </form>
                         </td>
@@ -43,3 +44,4 @@
     </table>
 </div>
 @endsection
+

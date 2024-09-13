@@ -131,8 +131,22 @@ Route::resource('opciones_examen_fisico', OpcionesExamenFisicoController::class)
 Route::resource('rcuerpo_oef', RcuerpoOefController::class);
 Route::resource('detalle_examen_fisico', DetalleExamenFisicoController::class);
 
-Route::resource('examen_fisico', ExamenFisicoController::class);
+// Route::resource('examen_fisico', ExamenFisicoController::class);
+// Route::get('examen_fisico/create/{personaId}', [ExamenFisicoController::class, 'create'])->name('examen_fisico.create');
+// Route::post('examen_fisico/{personaId}', [ExamenFisicoController::class, 'store'])->name('examen_fisico.store');
+
+// routes/web.php
+//Route::resource('examen_fisico', ExamenFisicoController::class);
 Route::get('examen_fisico/create/{personaId}', [ExamenFisicoController::class, 'create'])->name('examen_fisico.create');
+Route::post('examen_fisico/{personaId}', [ExamenFisicoController::class, 'store'])->name('examen_fisico.store');
+Route::get('examen_fisico/{personaId?}', [ExamenFisicoController::class, 'index'])->name('examen_fisico.index');
+Route::get('examen_fisico/{personaId}/{id}', [ExamenFisicoController::class, 'show'])->name('examen_fisico.show');
+Route::get('examen_fisico/{personaId}/{id}/edit', [ExamenFisicoController::class, 'edit'])->name('examen_fisico.edit');
+Route::put('examen_fisico/{personaId}/{id}', [ExamenFisicoController::class, 'update'])->name('examen_fisico.update');
+
+// Ruta manual para destruir un examen físico
+Route::delete('examen_fisico/{personaId}/{id}', [ExamenFisicoController::class, 'destroy'])->name('examen_fisico.destroy');
+
 
 Route::resource('cie10', Cie10Controller::class);
 Route::resource('consulta_medica', ConsultaMedicaController::class);

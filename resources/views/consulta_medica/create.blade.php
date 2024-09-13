@@ -135,10 +135,10 @@
             </div>
             <div class="modal-body">
                 <!-- Formulario de creación del examen físico -->
-                <form id="formCrearExamenFisico" action="{{ route('examen_fisico.store') }}" method="POST">
+                <form id="formCrearExamenFisico" action="{{ route('examen_fisico.store', ['personaId' => $personaId]) }}" method="POST">
                     @csrf
                     <input type="hidden" name="consulta_medica_id" value="{{ $consultaMedica->id }}">
-                    
+
                     <!-- Detalles del examen físico -->
                     @foreach($arrayDetalles as $detalle)
                         <div class="form-check">

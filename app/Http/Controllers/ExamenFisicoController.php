@@ -12,101 +12,108 @@ use Illuminate\Http\Request;
 
 class ExamenFisicoController extends Controller
 {
-    public function index()
+    public function index($personaId)
     {
+        $persona = Persona::findOrFail($personaId);
         $examenesAgrupados = ExamenFisico::with('detalle.rcuerpoOef.region', 'detalle.rcuerpoOef.opcionExamenFisico')
-        ->get()
-        ->groupBy('observacion');
+            ->where('persona_id', $personaId)
+            ->get()
+            ->groupBy('observacion');
     
-        return view('examen_fisico.index', compact('examenesAgrupados'));
+        return view('examen_fisico.index', compact('personaId', 'examenesAgrupados'));
     }
 
     public function create($personaId)
     {
-        $arrayDetalles = array();
-        $detalles = DetalleExamenFisico::all();
-        $i = 0;
-        foreach ($detalles as $detalle){
-            $rcuerpooef = RcuerpoOef::findOrFail($detalle->rcuerpo_oef_id);
-            $rcuerpo = RegionesDelCuerpo::findOrFail($rcuerpooef->tcampo_id);
-            $opcionexamen = OpcionesExamenFisico::findOrFail($rcuerpooef->campo_id);
-            $arrayDetalles[$i]['id']=$detalle->id;
-            $arrayDetalles[$i]['tipo']=$rcuerpo->tipo;
-            $arrayDetalles[$i]['campo']=$opcionexamen->campo;
-            $i++;
+        $arrayDetalles = [];
+        $detalles = DetalleExamenFisico::with('rcuerpoOef.region', 'rcuerpoOef.opcionExamenFisico')->get();
+
+        foreach ($detalles as $detalle) {
+            $arrayDetalles[] = [
+                'id' => $detalle->id,
+                'tipo' => $detalle->rcuerpoOef->region->tipo ?? 'N/A',
+                'campo' => $detalle->rcuerpoOef->opcionExamenFisico->campo ?? 'N/A'
+            ];
         }
-        //$regiones = RegionesDelCuerpo::all();
-        //var_dump($arrayDetalles);
-        //exit (0);
-        return view('examen_fisico.create', compact('arrayDetalles', 'personaId'));
+
+        return view('examen_fisico.create', compact('arrayDetalles', 'detalles', 'personaId'));
     }
 
     public function store(Request $request, $personaId)
     {
-        //var_dump($personaId);
-        //exit(0);
-        // $request->validate([
-        //     'detalle_examen_fisico_id' => 'required|array',
-        //     'observacion' => 'required|string',
-        //     'persona_id' => 'required|exists:personas,id',
-        // ]);
-        $persona = Persona::findOrFail($personaId);
+        $request->validate([
+            'detalle_examen_fisico_id' => 'required|array',
+            'observacion' => 'required|string',
+        ]);
+
         foreach ($request->detalle_examen_fisico_id as $detalle_id) {
             ExamenFisico::create([
                 'detalle_examen_fisico_id' => $detalle_id,
                 'observacion' => $request->observacion,
-                'persona_id' => $request-> $persona,
+                'persona_id' => $personaId,
             ]);
         }
 
-        return redirect()->route('examen_fisico.index')->with('success', 'Examen Físico creado exitosamente.');
+        return redirect()->route('examen_fisico.index', ['personaId' => $personaId])
+            ->with('success', 'Examen Físico creado exitosamente.');
     }
 
-    public function show($id)
+    public function show($personaId, $id)
     {
-        //$examenFisico = ExamenFisico::with('detalle')->findOrFail($id);
-        //return view('examen_fisico.show', compact('examenFisico'));
+        $persona = Persona::findOrFail($personaId);
+        $examenFisico = ExamenFisico::where('id', $id)
+            ->where('persona_id', $personaId)
+            ->with('detalle.rcuerpoOef.region', 'detalle.rcuerpoOef.opcionExamenFisico')
+            ->firstOrFail();
 
-        $examenFisicoDetalles = ExamenFisico::where('id', $id)
-        ->with('detalle.rcuerpoOef.region', 'detalle.rcuerpoOef.opcionExamenFisico')
-        ->get();
-    
-    return view('examen_fisico.show', compact('examenFisicoDetalles'));
-
+        return view('examen_fisico.show', compact('examenFisico', 'personaId'));
     }
 
-    public function edit($id)
+    public function edit($personaId, $id)
     {
-        $examenFisico = ExamenFisico::findOrFail($id);
+        $examenFisico = ExamenFisico::where('id', $id)
+            ->where('persona_id', $personaId)
+            ->firstOrFail();
+        
         $detalles = DetalleExamenFisico::all();
-        return view('examen_fisico.edit', compact('examenFisico', 'detalles'));
+        return view('examen_fisico.edit', compact('examenFisico', 'detalles', 'personaId'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $personaId, $id)
     {
         $request->validate([
             'detalle_examen_fisico_id' => 'required',
             'observacion' => 'required|string',
         ]);
 
-        $examenFisico = ExamenFisico::findOrFail($id);
-        $examenFisico->update($request->all());
+        $examenFisico = ExamenFisico::where('id', $id)
+            ->where('persona_id', $personaId)
+            ->firstOrFail();
 
-        return redirect()->route('examen_fisico.index')->with('success', 'Examen Físico actualizado exitosamente.');
+        $examenFisico->update([
+            'detalle_examen_fisico_id' => $request->detalle_examen_fisico_id,
+            'observacion' => $request->observacion,
+        ]);
+
+        return redirect()->route('examen_fisico.index', ['personaId' => $personaId])
+            ->with('success', 'Examen Físico actualizado exitosamente.');
     }
 
-    public function destroy($id)
+    public function destroy($personaId, $id)
     {
-        $examenFisico = ExamenFisico::findOrFail($id);
+        $examenFisico = ExamenFisico::where('id', $id)
+            ->where('persona_id', $personaId)
+            ->firstOrFail();
+
         $examenFisico->delete();
 
-        return redirect()->route('examen_fisico.index')->with('success', 'Examen Físico eliminado exitosamente.');
+        return redirect()->route('examen_fisico.index', ['personaId' => $personaId])
+            ->with('success', 'Examen Físico eliminado exitosamente.');
     }
 
-public function obtenerNomTipo($regionCuerpo_id)
-{
-    $regionCuerpo = RegionesDelCuerpo::findOrFail($regionCuerpo_id);
-
-}
-
+    public function obtenerNomTipo($regionCuerpo_id)
+    {
+        $regionCuerpo = RegionesDelCuerpo::findOrFail($regionCuerpo_id);
+        return $regionCuerpo->tipo;
+    }
 }
