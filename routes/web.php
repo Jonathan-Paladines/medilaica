@@ -27,6 +27,8 @@ use App\Http\Controllers\DetalleExamenFisicoController;
 use App\Http\Controllers\ExamenFisicoController;
 use App\Http\Controllers\Cie10Controller;
 use App\Http\Controllers\ConsultaMedicaController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\NurseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -152,3 +154,9 @@ Route::resource('cie10', Cie10Controller::class);
 Route::resource('consulta_medica', ConsultaMedicaController::class);
 //Route::get('consulta_medica/create/{persona_id}', [ConsultaMedicaController::class, 'create'])->name('consulta_medica.create');
 Route::get('consulta_medica/create/{persona_id?}', [ConsultaMedicaController::class, 'create'])->name('consulta_medica.create');
+
+// Ruta de los roles
+Route::resource('roles', RoleController::class);
+
+//Ruta de las vistas enfermeras
+Route::resource('nurses', NurseController::class);
