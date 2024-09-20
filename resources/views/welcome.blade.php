@@ -117,6 +117,7 @@
                         <a class="collapse-item" href="{{ url('/personas') }}">Pacientes</a>
                         <a class="collapse-item" href="{{ url('/nurses') }}">Enfermeras</a>
                         <a class="collapse-item" href="{{ url('/roles') }}">Roles</a>
+                        <a class="collapse-item" href="{{ url('/doctors') }}">Doctores</a>
                         <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
