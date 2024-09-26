@@ -20,6 +20,17 @@ use App\Http\Controllers\PersonaHabitosController;
 use App\Http\Controllers\PersonasAntecedentesController;
 use App\Http\Controllers\PersonasAfamiliaresController;
 use App\Http\Controllers\PersonasAquirurgicosController;
+use App\Http\Controllers\RegionesDelCuerpoController;
+use App\Http\Controllers\OpcionesExamenFisicoController;
+use App\Http\Controllers\RcuerpoOefController;
+use App\Http\Controllers\DetalleExamenFisicoController;
+use App\Http\Controllers\ExamenFisicoController;
+use App\Http\Controllers\Cie10Controller;
+use App\Http\Controllers\ConsultaMedicaController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\NurseController;
+use App\Http\Controllers\ProfileController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -114,4 +125,37 @@ Route::post('quirurgicos-antecedentes', [QuirurgicosAntecedentesController::clas
 
 
 
+    // Rutas para mostrar los exámenes físicos de una persona
+    Route::resource('regiones_cuerpo', RegionesDelCuerpoController::class);
+    Route::resource('opciones_examen_fisico', OpcionesExamenFisicoController::class);
+    Route::resource('rcuerpo_oef', RcuerpoOefController::class);
+    Route::resource('detalle_examen_fisico', DetalleExamenFisicoController::class);
+    
+    // Route::resource('examen_fisico', ExamenFisicoController::class);
+    // Route::get('examen_fisico/create/{personaId}', [ExamenFisicoController::class, 'create'])->name('examen_fisico.create');
+    // Route::post('examen_fisico/{personaId}', [ExamenFisicoController::class, 'store'])->name('examen_fisico.store');
+    
+    // routes/web.php
+    //Route::resource('examen_fisico', ExamenFisicoController::class);
+    Route::get('examen_fisico/create/{personaId}', [ExamenFisicoController::class, 'create'])->name('examen_fisico.create');
+    Route::post('examen_fisico/{personaId}', [ExamenFisicoController::class, 'store'])->name('examen_fisico.store');
+    Route::get('examen_fisico/{personaId?}', [ExamenFisicoController::class, 'index'])->name('examen_fisico.index');
+    Route::get('examen_fisico/{personaId}/{id}', [ExamenFisicoController::class, 'show'])->name('examen_fisico.show');
+    Route::get('examen_fisico/{personaId}/{id}/edit', [ExamenFisicoController::class, 'edit'])->name('examen_fisico.edit');
+    Route::put('examen_fisico/{personaId}/{id}', [ExamenFisicoController::class, 'update'])->name('examen_fisico.update');
+    
+    // Ruta manual para destruir un examen físico
+    Route::delete('examen_fisico/{personaId}/{id}', [ExamenFisicoController::class, 'destroy'])->name('examen_fisico.destroy');
+    
+    
+    Route::resource('cie10', Cie10Controller::class);
+    Route::resource('consulta_medica', ConsultaMedicaController::class);
+    //Route::get('consulta_medica/create/{persona_id}', [ConsultaMedicaController::class, 'create'])->name('consulta_medica.create');
+    Route::get('consulta_medica/create/{persona_id?}', [ConsultaMedicaController::class, 'create'])->name('consulta_medica.create');
+    
+    // Ruta de los roles
+    Route::resource('roles', RoleController::class);
+    
+    //Ruta de las vistas enfermeras
+    Route::resource('nurses', NurseController::class);
 
