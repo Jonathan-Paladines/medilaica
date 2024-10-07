@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\MedicinaController;
 use App\Http\Controllers\PersonaController;
@@ -30,7 +31,46 @@ use App\Http\Controllers\ConsultaMedicaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NurseController;
 
-Route::get('/', function () {
+//auth
+Route::middleware('throttle')->prefix('auth')->group(function(){
+    Route::get('login', [AuthController::class, 'loginForm'])->name('login');
+    Route::post('login', [AuthController::class, 'loginVerify'])->name('login.verify');
+    Route::get('register', [AuthController::class, 'registerForm'])->name('register');
+    Route::post('register', [AuthController::class, 'registerVerify'])->name('register.verify');
+    Route::post('signOut', [AuthController::class,'signOut'])->name('sign-Out');
+});
+
+    #Protegidas
+    Route::middleware(['auth'])->prefix('dashboard')->group(function(){
+        Route::get('/dashboard', function () {
+            return view('welcome');
+        })->name('dashboard');;
+
+    //Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    //Route::resource('pacientes', PacienteController::class);
+    //Route::resource('datosacademicos', DatosAcademicosController::class);
+    //Route::resource('vacunas', VacunaController::class);
+    //Route::resource('tipoalergias', TipoAlergiaController::class);
+    //Route::resource('alergias', AlergiaController::class);
+    //Route::resource('contactos', ContactoController::class);
+    //Route::resource('personaalergias', PersonaAlergiaController::class);
+    //Route::resource('personacontactos', PersonaContactosController::class);
+    //Route::resource('personavacunas', PersonaVacunasController::
+
+
+    //Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login']);
+    //Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+    //Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class,'showRegistrationForm'])->name('register');
+    //Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class,'register']);
+
+    //Route::get('/password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class,'showLinkRequestForm'])->name('password.request');
+    //Route::post('/password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class,'sendResetLinkEmail'])->name('password)
+    });
+
+
+Route::get('/dashboard', function () {
     return view('welcome');
 });
 
