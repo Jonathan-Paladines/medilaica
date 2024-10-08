@@ -70,10 +70,6 @@ Route::middleware('throttle')->prefix('auth')->group(function(){
     });
 
 
-Route::get('/dashboard', function () {
-    return view('welcome');
-});
-
 Route::get('/magician', function () {
     return view('halo');
 });

@@ -95,15 +95,12 @@
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
                     aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>Secciones</span>
                 </a>
                 <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+
                         <div class="collapse-divider">
                             <h6 class="collapse-header">Fichas medicas:</h6>
                             <a class="collapse-item active" href="{{ url('/personas') }}">Pacientes</a>
@@ -345,10 +342,14 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
+                                <!-- Formulario de logout oculto -->
+                                <form id="logout-form" action="{{ route('sign-Out') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </li>
 
@@ -361,7 +362,7 @@
                 <!-- Begin Page Content -->
 <div class="container-fluid mt-3">
     <div class="row">
-        <legend>Principal</legend>
+        <legend>Dashboard</legend>
 
             <img src="{{ asset('img/medilaica-001.png') }}" alt="Medilaica_fondo" style="width:900px;height:500px;" class="col-sm-10 mb-10">
 
@@ -380,6 +381,12 @@
 
     </div>
 </div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
     
 </body>
