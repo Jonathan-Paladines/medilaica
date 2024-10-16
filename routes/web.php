@@ -32,6 +32,24 @@ use App\Http\Controllers\ConsultaMedicaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\UserRoleController;
+use Spatie\Permission\Http\Middleware\RoleMiddleware;
+
+// Redirigir la ruta raíz a la pantalla de login
+Route::get('/', function () {
+    return redirect()->route('login'); // Redirige a la ruta del login
+});
+
+// Solo los usuarios con el rol de Admin pueden acceder a estas rutas
+Route::middleware(['role:Admin'])->group(function () {
+    // Rutas para gestionar roles y permisos de usuarios
+    Route::get('user_roles', [UserRoleController::class, 'index'])->name('user_roles.index');
+    Route::get('user_roles/{id}/edit', [UserRoleController::class, 'edit'])->name('user_roles.edit');
+    Route::put('user_roles/{id}', [UserRoleController::class, 'update'])->name('user_roles.update');
+
+    // Rutas para asignar roles
+    Route::get('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
+    Route::post('/roles/assign', [RoleController::class, 'storeAssign'])->name('roles.storeAssign');
+    });
 
 // Rutas de autenticación
 Route::middleware('throttle')->prefix('auth')->group(function(){
@@ -174,16 +192,11 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function(){
     Route::get('user_roles/{id}/edit', [UserRoleController::class, 'edit'])->name('user_roles.edit');
     Route::put('user_roles/{id}', [UserRoleController::class, 'update'])->name('user_roles.update');
 
-    // Solo los usuarios con el rol de Admin pueden acceder a estas rutas
-    Route::middleware(['role:Admin'])->group(function () {
-        // Rutas para gestionar roles y permisos de usuarios
-        Route::get('user_roles', [UserRoleController::class, 'index'])->name('user_roles.index');
-        Route::get('user_roles/{id}/edit', [UserRoleController::class, 'edit'])->name('user_roles.edit');
-        Route::put('user_roles/{id}', [UserRoleController::class, 'update'])->name('user_roles.update');
-    });
     
     // Otras rutas para las diferentes funcionalidades que has implementado
     Route::resource('roles', RoleController::class);
+    Route::get('assign-role', [RoleController::class, 'assign'])->name('roles.assign');
+    Route::post('assign-role', [RoleController::class, 'assignRole'])->name('roles.assignRole');
     Route::resource('nurses', NurseController::class);
         
     Route::get('/magician', function () {

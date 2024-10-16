@@ -115,6 +115,13 @@
                         <a class="collapse-item" href="{{ url('/nurses') }}">Enfermeras</a>
                         <a class="collapse-item" href="{{ url('/roles') }}">Roles</a>
                         <a class="collapse-item" href="blank.html">Blank Page</a>
+
+                        <h6 class="collapse-header">Gestión de roles:</h6>
+                        <!-- Enlace para la creación de roles -->
+                        <a class="collapse-item" href="{{ route('roles.create') }}">Crear Rol</a>
+                        <!-- Enlace para la asignación de roles -->
+                        <a class="collapse-item" href="{{ route('roles.assign') }}">Asignar Roles</a>
+
                     </div>
                 </div>
             </li>

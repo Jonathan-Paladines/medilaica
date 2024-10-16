@@ -8,8 +8,8 @@
     <form action="{{ route('roles.store') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label for="nombre">Nombre del Rol</label>
-            <input type="text" name="nombre" class="form-control" value="{{ old('nombre') }}">
+            <label for="name">Nombre del Rol</label>
+            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
             @error('nombre')
             <small class="text-danger">{{ $message }}</small>
             @enderror
